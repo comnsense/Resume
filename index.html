@@ -1,433 +1,554 @@
-<html lang="en-US"><script type="text/javascript">
-    var spector;
-    var captureOnLoad = false;
-    var captureOffScreen = false;
-    window.__SPECTOR_Canvases = [];
+<html lang="en-US">
+<script type="text/javascript">
+  var spector;
+  var captureOnLoad = false;
+  var captureOffScreen = false;
+  window.__SPECTOR_Canvases = [];
 
-    (function() {
-        var __SPECTOR_Origin_EXTENSION_GetContext = HTMLCanvasElement.prototype.getContext;
-        HTMLCanvasElement.prototype.__SPECTOR_Origin_EXTENSION_GetContext = __SPECTOR_Origin_EXTENSION_GetContext;
+  (function () {
+    var __SPECTOR_Origin_EXTENSION_GetContext = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.__SPECTOR_Origin_EXTENSION_GetContext = __SPECTOR_Origin_EXTENSION_GetContext;
 
-        if (typeof OffscreenCanvas !== 'undefined') {
-            var __SPECTOR_Origin_EXTENSION_OffscreenGetContext = OffscreenCanvas.prototype.getContext;
-            OffscreenCanvas.prototype.__SPECTOR_Origin_EXTENSION_OffscreenGetContext = __SPECTOR_Origin_EXTENSION_OffscreenGetContext;
+    if (typeof OffscreenCanvas !== 'undefined') {
+      var __SPECTOR_Origin_EXTENSION_OffscreenGetContext = OffscreenCanvas.prototype.getContext;
+      OffscreenCanvas.prototype.__SPECTOR_Origin_EXTENSION_OffscreenGetContext = __SPECTOR_Origin_EXTENSION_OffscreenGetContext;
 
-            OffscreenCanvas.prototype.getContext = function () {
-                var context = null;
-                if (!arguments.length) {
-                    return context;
-                }
-    
-                if (arguments.length === 1) {
-                    context = this.__SPECTOR_Origin_EXTENSION_OffscreenGetContext(arguments[0]);
-                    if (context === null) {
-                        return context;
-                    }
-                }
-                else if (arguments.length === 2) {
-                    context = this.__SPECTOR_Origin_EXTENSION_OffscreenGetContext(arguments[0], arguments[1]);
-                    if (context === null) {
-                        return context;
-                    }
-                }
-    
-                var contextNames = ["webgl", "experimental-webgl", "webgl2", "experimental-webgl2"];
-                if (contextNames.indexOf(arguments[0]) !== -1) {
-                    // context.canvas.setAttribute("__spector_context_type", arguments[0]);
-                    // Notify the page a canvas is available.
-                    var myEvent = new CustomEvent("SpectorWebGLCanvasAvailableEvent");
-                    document.dispatchEvent(myEvent);
-                    this.id = "Offscreen";
-                    window.__SPECTOR_Canvases.push(this);
-    
-                    if (captureOnLoad) {
-                        // Ensures canvas is in the dom to capture the one we are currently tracking.
-                        if (false) {
-                            spector.captureContext(context, 500, false, false);
-                            captureOnLoad = false;
-                        }
-                    }
-                }
-    
-                return context;
-            }
+      OffscreenCanvas.prototype.getContext = function () {
+        var context = null;
+        if (!arguments.length) {
+          return context;
         }
 
-        HTMLCanvasElement.prototype.getContext = function () {
-            var context = null;
-            if (!arguments.length) {
-                return context;
-            }
-
-            if (arguments.length === 1) {
-                context = this.__SPECTOR_Origin_EXTENSION_GetContext(arguments[0]);
-                if (context === null) {
-                    return context;
-                }
-            }
-            else if (arguments.length === 2) {
-                context = this.__SPECTOR_Origin_EXTENSION_GetContext(arguments[0], arguments[1]);
-                if (context === null) {
-                    return context;
-                }
-            }
-
-            var contextNames = ["webgl", "experimental-webgl", "webgl2", "experimental-webgl2"];
-            if (contextNames.indexOf(arguments[0]) !== -1) {
-                context.canvas.setAttribute("__spector_context_type", arguments[0]);
-                // Notify the page a canvas is available.
-                var myEvent = new CustomEvent("SpectorWebGLCanvasAvailableEvent");
-                document.dispatchEvent(myEvent);
-
-                if (captureOffScreen) {
-                    var found = false;
-                    for (var i = 0; i < window.__SPECTOR_Canvases.length; i++) {
-                        if (window.__SPECTOR_Canvases[i] === this) {
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (!found) {
-                        window.__SPECTOR_Canvases.push(this);
-                    }
-                }
-
-                if (captureOnLoad) {
-                    // Ensures canvas is in the dom to capture the one we are currently tracking.
-                    if (this.parentElement || false) {
-                        spector.captureContext(context, 500, false, false);
-                        captureOnLoad = false;
-                    }
-                }
-            }
-
+        if (arguments.length === 1) {
+          context = this.__SPECTOR_Origin_EXTENSION_OffscreenGetContext(arguments[0]);
+          if (context === null) {
             return context;
+          }
         }
-    })()</script><head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Mirela Yosifova</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin">
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" media="all" onload="this.media='all'">
-    <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap"/>
-    </noscript>
-    <link href="css/font-awesome/css/all.min.css?ver=1.2.1" rel="stylesheet">
-    <link href="css/mdb.min.css?ver=1.2.1" rel="stylesheet">
-    <link href="css/aos.css?ver=1.2.1" rel="stylesheet">
-    <link href="css/main.css?ver=1.2.1" rel="stylesheet">
-    <noscript>
-      <style type="text/css">
-        [data-aos] {
-            opacity: 1 !important;
-            transform: translate(0) scale(1) !important;
+        else if (arguments.length === 2) {
+          context = this.__SPECTOR_Origin_EXTENSION_OffscreenGetContext(arguments[0], arguments[1]);
+          if (context === null) {
+            return context;
+          }
         }
-      </style>
-    </noscript>
-  <style>INPUT:-webkit-autofill,SELECT:-webkit-autofill,TEXTAREA:-webkit-autofill{animation-name:onautofillstart}INPUT:not(:-webkit-autofill),SELECT:not(:-webkit-autofill),TEXTAREA:not(:-webkit-autofill){animation-name:onautofillcancel}@keyframes onautofillstart{from{}}@keyframes onautofillcancel{from{}}
-</style></head>
-  <body class="bg-light" id="top" data-aos-easing="ease" data-aos-duration="1000" data-aos-delay="0">
-    <header class="d-print-none">
-      <div class="container text-center text-lg-right">
-        <div class="pt-4 clearfix">
-          <h1 class="site-title mb-0">Mirela Yosifova</h1>
-          <div class="site-nav"> 
-            <nav role="navigation">
-              <ul class="nav justify-content-center">
-                <li class="nav-item"><a class="nav-link" href="#about" title="About"><span class="menu-title">About</span></a>
-                </li>
-                <li class="nav-item"><a class="nav-link" href="#skills" title="Skills"><span class="menu-title">Skills</span></a>
-                </li>
-                <li class="nav-item"><a class="nav-link" href="#experience" title="Experience"><span class="menu-title">Experience</span></a>
-                </li>
-                <li class="nav-item"><a class="nav-link" href="#education" title="Education"><span class="menu-title">Education</span></a>
-                </li>
-              
-                <li class="nav-item"><a class="nav-link" href="#contact" title="Contact"><span class="menu-title">Contact</span></a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </header>
-    <div class="page-content">
-      <div class="container">
-<div class="resume-container">
-  <div class="shadow-1-strong bg-white my-5" id="intro">
-    <div class="bg-info text-white">
 
-      <div class="cover bg-image"><img src="images/background.jpg">
-        <div class="mask" style="background-color: rgba(248, 248, 248, 0);backdrop-filter: blur(2px);">
-          <div class="text-left p-5">
-            <div class="avatar p-1"><img class="img-thumbnail shadow-2-strong" src="images/avatar.jpg" width="160" height="160"></div>
-            <div class="header-bio mt-3">
-              <div data-aos="zoom-in" data-aos-delay="0" class="aos-init aos-animate">
-                <h2 class="h1">Mirela Yosifova</h2>
-                <p>I do I T</p>
-              </div>
+        var contextNames = ["webgl", "experimental-webgl", "webgl2", "experimental-webgl2"];
+        if (contextNames.indexOf(arguments[0]) !== -1) {
+          // context.canvas.setAttribute("__spector_context_type", arguments[0]);
+          // Notify the page a canvas is available.
+          var myEvent = new CustomEvent("SpectorWebGLCanvasAvailableEvent");
+          document.dispatchEvent(myEvent);
+          this.id = "Offscreen";
+          window.__SPECTOR_Canvases.push(this);
 
-<a class="flex items-center justify-center gap-3 px-8 py-4"></a><a href="http://twitter.com/ahhwakk" rel="external nofollow" class="p-2 hover:opacity-50"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><desc>Download more icon variants from https://tabler-icons.io/i/brand-twitter
-    </desc><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z"></path></svg> </a><a href="https://at.tumblr.com/mumblrtum/wruk95g7mypr" rel="external nofollow" class="p-2 hover:opacity-50"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-tumblr" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><desc>Download more icon variants from https://tabler-icons.io/i/brand-tumblr
-    </desc><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M14 21h4v-4h-4v-6h4v-4h-4v-4h-4v1a3 3 0 0 1 -3 3h-1v4h4v6a4 4 0 0 0 4 4"></path></svg> </a><a href="https://www.reddit.com/user/Extension-Passage394" rel="external nofollow" class="p-2 hover:opacity-50"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-reddit" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><desc>Download more icon variants from https://tabler-icons.io/i/brand-reddit
-    </desc><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 8c2.648 0 5.028 .826 6.675 2.14a2.5 2.5 0 0 1 2.326 4.36c0 3.59 -4.03 6.5 -9 6.5c-4.875 0 -8.845 -2.8 -9 -6.294l-1 -.206a2.5 2.5 0 0 1 2.326 -4.36c1.646 -1.313 4.026 -2.14 6.674 -2.14z"></path><path d="M12 8l1 -5l6 1"></path><circle cx="19" cy="4" r="1"></circle><circle cx="9" cy="13" r=".5" fill="currentColor"></circle><circle cx="15" cy="13" r=".5" fill="currentColor"></circle><path d="M10 17c.667 .333 1.333 .5 2 .5s1.333 -.167 2 -.5"></path></svg> </a><a href="https://codepen.io/mirelse" rel="external nofollow" class="p-2 hover:opacity-50"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-codepen" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><desc>Download more icon variants from https://tabler-icons.io/i/brand-codepen
-    </desc><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 15l9 6l9 -6l-9 -6l-9 6"></path><path d="M3 9l9 6l9 -6l-9 -6l-9 6"></path><line x1="3" y1="9" x2="3" y2="15"></line><line x1="21" y1="9" x2="21" y2="15"></line><line x1="12" y1="3" x2="12" y2="9"></line><line x1="12" y1="15" x2="12" y2="21"></line></svg> </a>
+          if (captureOnLoad) {
+            // Ensures canvas is in the dom to capture the one we are currently tracking.
+            if (false) {
+              spector.captureContext(context, 500, false, false);
+              captureOnLoad = false;
+            }
+          }
+        }
 
+        return context;
+      }
+    }
 
-              <div class="header-social mb-3 d-print-none aos-init aos-animate" data-aos="zoom-in" data-aos-delay="200">
-                <nav role="navigation">
-                  <ul class="nav justify-content-left">
-                    <li class="nav-item"><a class="nav-link" href="mailto:ahwakk@icloud.com" title="Email"><i class="fa fa-envelope"></i><span class="menu-title sr-only">Email</span></a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="https://www.linkedin.com/in/mirelsewhere" title="LinkedIn"><i class="fab fa-linkedin"></i><span class="menu-title sr-only">LinkedIn</span></a>
-                    </li>
-                    
-                    <li class="nav-item"><a class="nav-link" href="https://github.com/mirelse" title="Github"><i class="fab fa-github"></i><span class="menu-title sr-only">Github</span></a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-              <div class="d-print-none"><a class="btn btn-outline-light btn-lg shadow-sm mt-1 me-3 aos-init aos-animate" href="https://raw.githubusercontent.com/mirelse/mirelse.github.io/main/Resume.pdf" data-aos="fade-right" data-aos-delay="700">Download CV</a><a class="btn btn-info btn-lg shadow-sm mt-1 aos-init aos-animate" href="#contact" data-aos="fade-left" data-aos-delay="700">Hire Me</a></div>
+    HTMLCanvasElement.prototype.getContext = function () {
+      var context = null;
+      if (!arguments.length) {
+        return context;
+      }
 
-            </div>
-          </div>
+      if (arguments.length === 1) {
+        context = this.__SPECTOR_Origin_EXTENSION_GetContext(arguments[0]);
+        if (context === null) {
+          return context;
+        }
+      }
+      else if (arguments.length === 2) {
+        context = this.__SPECTOR_Origin_EXTENSION_GetContext(arguments[0], arguments[1]);
+        if (context === null) {
+          return context;
+        }
+      }
+
+      var contextNames = ["webgl", "experimental-webgl", "webgl2", "experimental-webgl2"];
+      if (contextNames.indexOf(arguments[0]) !== -1) {
+        context.canvas.setAttribute("__spector_context_type", arguments[0]);
+        // Notify the page a canvas is available.
+        var myEvent = new CustomEvent("SpectorWebGLCanvasAvailableEvent");
+        document.dispatchEvent(myEvent);
+
+        if (captureOffScreen) {
+          var found = false;
+          for (var i = 0; i < window.__SPECTOR_Canvases.length; i++) {
+            if (window.__SPECTOR_Canvases[i] === this) {
+              found = true;
+              break;
+            }
+          }
+          if (!found) {
+            window.__SPECTOR_Canvases.push(this);
+          }
+        }
+
+        if (captureOnLoad) {
+          // Ensures canvas is in the dom to capture the one we are currently tracking.
+          if (this.parentElement || false) {
+            spector.captureContext(context, 500, false, false);
+            captureOnLoad = false;
+          }
+        }
+      }
+
+      return context;
+    }
+  })()</script>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mirela Yosifova</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin">
+  <link rel="preload" as="style"
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap"
+    media="all" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" />
+  </noscript>
+  <link href="css/font-awesome/css/all.min.css?ver=1.2.1" rel="stylesheet">
+  <link href="css/mdb.min.css?ver=1.2.1" rel="stylesheet">
+  <link href="css/aos.css?ver=1.2.1" rel="stylesheet">
+  <link href="css/main.css?ver=1.2.1" rel="stylesheet">
+  <noscript>
+    <style type="text/css">
+      [data-aos] {
+        opacity: 1 !important;
+        transform: translate(0) scale(1) !important;
+      }
+    </style>
+  </noscript>
+  <style>
+    INPUT:-webkit-autofill,
+    SELECT:-webkit-autofill,
+    TEXTAREA:-webkit-autofill {
+      animation-name: onautofillstart
+    }
+
+    INPUT:not(:-webkit-autofill),
+    SELECT:not(:-webkit-autofill),
+    TEXTAREA:not(:-webkit-autofill) {
+      animation-name: onautofillcancel
+    }
+
+    @keyframes onautofillstart {
+      from {}
+    }
+
+    @keyframes onautofillcancel {
+      from {}
+    }
+  </style>
+</head>
+
+<body class="bg-light" id="top" data-aos-easing="ease" data-aos-duration="1000" data-aos-delay="0">
+  <header class="d-print-none">
+    <div class="container text-center text-lg-right">
+      <div class="pt-4 clearfix">
+        <h1 class="site-title mb-0">Mirela Yosifova</h1>
+        <div class="site-nav">
+          <nav role="navigation">
+            <ul class="nav justify-content-center">
+              <li class="nav-item"><a class="nav-link" href="#about" title="About"><span
+                    class="menu-title">About</span></a>
+              </li>
+              <li class="nav-item"><a class="nav-link" href="#skills" title="Skills"><span
+                    class="menu-title">Skills</span></a>
+              </li>
+              <li class="nav-item"><a class="nav-link" href="#experience" title="Experience"><span
+                    class="menu-title">Experience</span></a>
+              </li>
+              <li class="nav-item"><a class="nav-link" href="#education" title="Education"><span
+                    class="menu-title">Education</span></a>
+              </li>
+
+              <li class="nav-item"><a class="nav-link" href="#contact" title="Contact"><span
+                    class="menu-title">Contact</span></a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </div>
-  </div>
-  <div class="shadow-1-strong bg-white my-5 p-5" id="about">
-    <div class="about-section">
-      <div class="row">
-        <div class="col-md-6">
-          <h2 class="h2 fw-light mb-4">About Me</h2>
-                <p> Hello! I’m Mirela Yosifova,
-                  <br> and tech is a field that I love.
-        </p><p>I I'm currently a Fourth Year  Informatics and Computer Science at Varna Free University, Bulgaria, and aspiring developer.
-      
-      </p>
-     
-    
-<p> <strong> With a keen interest in cloud engineering and learn new skills in technology, including software engineering,web development, data management and knowledge of cloud computing applications. </strong></p><strong>
-          
-        </strong></div><strong>
+  </header>
+  <div class="page-content">
+    <div class="container">
+      <div class="resume-container">
+        <div class="shadow-1-strong bg-white my-5" id="intro">
+          <div class="bg-info text-white">
+
+            <div class="cover bg-image"><img src="images/background.jpg">
+              <div class="mask" style="background-color: rgba(248, 248, 248, 0);backdrop-filter: blur(2px);">
+                <div class="text-left p-5">
+                  <div class="avatar p-1"><img class="img-thumbnail shadow-2-strong" src="images/avatar.jpg" width="160"
+                      height="160"></div>
+                  <div class="header-bio mt-3">
+                    <div data-aos="zoom-in" data-aos-delay="0" class="aos-init aos-animate">
+                      <h2 class="h1">Mirela Yosifova</h2>
+                      <p> <a class="flex items-center justify-center gap-3 px-8 py-4"></a><a
+                          href="http://twitter.com/ahhwakk" rel="external nofollow" class="p-2 hover:opacity-50"><svg
+                            xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter"
+                            width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path
+                              d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z">
+                            </path>
+                          </svg> </a><a href="https://at.tumblr.com/mumblrtum" rel="external nofollow"
+                          class="p-2 hover:opacity-50"><svg xmlns="http://www.w3.org/2000/svg"
+                            class="icon icon-tabler icon-tabler-brand-tumblr" width="24" height="24" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <desc>Download more icon variants from https://tabler-icons.io/i/brand-tumblr
+                            </desc>
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M14 21h4v-4h-4v-6h4v-4h-4v-4h-4v1a3 3 0 0 1 -3 3h-1v4h4v6a4 4 0 0 0 4 4"></path>
+                          </svg> </a><a href="https://www.reddit.com/user/Extension-Passage394" rel="external nofollow"
+                          class="p-2 hover:opacity-50"><svg xmlns="http://www.w3.org/2000/svg"
+                            class="icon icon-tabler icon-tabler-brand-reddit" width="24" height="24" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round">
+
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path
+                              d="M12 8c2.648 0 5.028 .826 6.675 2.14a2.5 2.5 0 0 1 2.326 4.36c0 3.59 -4.03 6.5 -9 6.5c-4.875 0 -8.845 -2.8 -9 -6.294l-1 -.206a2.5 2.5 0 0 1 2.326 -4.36c1.646 -1.313 4.026 -2.14 6.674 -2.14z">
+                            </path>
+                            <path d="M12 8l1 -5l6 1"></path>
+                            <circle cx="19" cy="4" r="1"></circle>
+                            <circle cx="9" cy="13" r=".5" fill="currentColor"></circle>
+                            <circle cx="15" cy="13" r=".5" fill="currentColor"></circle>
+                            <path d="M10 17c.667 .333 1.333 .5 2 .5s1.333 -.167 2 -.5"></path>
+                          </svg> </a><a href="https://codepen.io/mirelse" rel="external nofollow"
+                          class="p-2 hover:opacity-50"><svg xmlns="http://www.w3.org/2000/svg"
+                            class="icon icon-tabler icon-tabler-brand-codepen" width="24" height="24"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"
+                            stroke-linecap="round" stroke-linejoin="round">
+
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M3 15l9 6l9 -6l-9 -6l-9 6"></path>
+                            <path d="M3 9l9 6l9 -6l-9 -6l-9 6"></path>
+                            <line x1="3" y1="9" x2="3" y2="15"></line>
+                            <line x1="21" y1="9" x2="21" y2="15"></line>
+                            <line x1="12" y1="3" x2="12" y2="9"></line>
+                            <line x1="12" y1="15" x2="12" y2="21"></line>
+                          </svg> </a>
+                      </p>
+                    </div>
+
+
+
+
+                    <div class="header-social mb-3 d-print-none aos-init aos-animate" data-aos="zoom-in"
+                      data-aos-delay="200">
+                      <nav role="navigation">
+                        <ul class="nav justify-content-left">
+                          <li class="nav-item"><a class="nav-link" href="mailto:ahwakk@icloud.com" title="Email"><i
+                                class="fa fa-envelope"></i><span class="menu-title sr-only">Email</span></a>
+                          </li>
+                          <li class="nav-item"><a class="nav-link" href="https://www.linkedin.com/in/mirelsewhere"
+                              title="LinkedIn"><i class="fab fa-linkedin"></i><span
+                                class="menu-title sr-only">LinkedIn</span></a>
+                          </li>
+
+                          <li class="nav-item"><a class="nav-link" href="https://github.com/mirelse" title="Github"><i
+                                class="fab fa-github"></i><span class="menu-title sr-only">Github</span></a>
+                          </li>
+                           </ul>
+                      </nav>
+                    </div>
+                    <div class="d-print-none"><a
+                        class="btn btn-outline-light btn-lg shadow-sm mt-1 me-3 aos-init aos-animate"
+                        href="https://raw.githubusercontent.com/mirelse/mirelse.github.io/main/Resume.pdf"
+                        data-aos="fade-right" data-aos-delay="700">Download CV</a><a
+                        class="btn btn-info btn-lg shadow-sm mt-1 aos-init aos-animate" href="#contact"
+                        data-aos="fade-left" data-aos-delay="700">Hire Me</a></div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="col-md-5 offset-lg-1">
           <div class="row mt-2">
-            <h2 class="h2 fw-light mb-4">Bio</h2>
+            <h2 class="h2 fw-light mb-4">IAM</h2>
             <div class="col-sm-5">
-              <div class="pb-2 fw-bolder"><i class="far fa-calendar-alt pe-2 text-muted" style="width:24px;opacity:0.85;"></i> Date Of Birth</div>
+              <div class="pb-2 fw-bolder"><i class="far fa-calendar-alt pe-2 text-muted"
+                  style="width:24px;opacity:0.85;"></i> Date Of Birth</div>
             </div>
             <div class="col-sm-7">
               <div class="pb-2">05/03/1997</div>
             </div>
             <div class="col-sm-5">
-              <div class="pb-2 fw-bolder"><i class="far fa-envelope pe-2 text-muted" style="width:24px;opacity:0.85;"></i> Email</div>
+              <div class="pb-2 fw-bolder"><i class="far fa-envelope pe-2 text-muted"
+                  style="width:24px;opacity:0.85;"></i> Email</div>
             </div>
             <div class="col-sm-7">
               <div class="pb-2">ahwakk@icloud.com</div>
             </div>
-             
+
             <div class="col-sm-5">
-              <div class="pb-2 fw-bolder"><i class="fas fa-phone pe-2 text-muted" style="width:24px;opacity:0.85;"></i> Phone</div>
+              <div class="pb-2 fw-bolder"><i class="fas fa-phone pe-2 text-muted" style="width:24px;opacity:0.85;"></i>
+                Phone</div>
             </div>
             <div class="col-sm-7">
               <div class="pb-2">(+359) 877359073</div>
             </div>
             <div class="col-sm-5">
-              <div class="pb-2 fw-bolder"><i class="fas fa-map-marker-alt pe-2 text-muted" style="width:24px;opacity:0.85;"></i> Address</div>
+              <div class="pb-2 fw-bolder"><i class="fas fa-map-marker-alt pe-2 text-muted"
+                  style="width:24px;opacity:0.85;"></i> Address</div>
             </div>
             <div class="col-sm-7">
               <div class="pb-2">g.k. Lozenets , 1421 ul. "Kaliakra" 2 <br> Sofia (Bulgaria)</div>
             </div>
           </div>
         </div>
-      </strong></div><strong>
-    </strong></div><strong>
-  </strong></div><strong>
-  
-  <div class="shadow-1-strong bg-white my-5 p-5" id="skills">
-    <div class="skills-section">
-      <h2 class="h2 fw-light mb-4">Professional Skills</h2>
+        </strong>
+      </div><strong>
+      </strong>
+    </div><strong>
+    </strong>
+  </div>
+  <div class="shadow-1-strong bg-white my-5 p-5" id="about">
+    <div class="about-section">
       <div class="row">
         <div class="col-md-6">
-          <div class="mb-3"><span class="fw-bolder">Cloud (AWSCloud) </span>
-            <div class="progress my-2 rounded" style="height: 20px">
-              <div class="progress-bar bg-info aos-init" role="progressbar" data-aos="zoom-in-right" data-aos-delay="300" data-aos-anchor=".skills-section" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">Intermediate</div>
-            </div>
-          </div>
-          <div class="mb-3"><span class="fw-bolder">Libraries, Frameworks, and Other (Bootstrap/React Actions)</span>
-            <div class="progress my-2 rounded" style="height: 20px">
-              <div class="progress-bar bg-info aos-init" role="progressbar" data-aos="zoom-in-right" data-aos-delay="300" data-aos-anchor=".skills-section" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">Intermediate</div>
-            </div>
-          </div>
-          <div class="mb-3"><span class="fw-bolder">Configuration Management (Ansible/Puppet)</span>
-            <div class="progress my-2 rounded" style="height: 20px">
-              <div class="progress-bar bg-info aos-init" role="progressbar" data-aos="zoom-in-right" data-aos-delay="300" data-aos-anchor=".skills-section" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">Intermediate</div>
-            </div>
-          </div>
-          <div class="mb-3"><span class="fw-bolder">Scripting (Python/Bash)</span>
-            <div class="progress my-2 rounded" style="height: 20px">
-              <div class="progress-bar bg-info aos-init" role="progressbar" data-aos="zoom-in-right" data-aos-delay="300" data-aos-anchor=".skills-section" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">Intermediate</div>
-            </div>
-            
-            <br><p></p><p>  # Currently
+          <h2 class="h2 fw-light mb-4">About Me</h2>
+          <p> Hello! I’m Mirela ,
+            <br> I have a computer science background but the majority of my most recent skills have been self taught. I
+            currently have 3 main technical stacks which I work with. This includes React with TypeScript and Node.
+            Python
+          </p>
 
-      I  have 3 main technical stacks which I work with. This includes 
-        
-                React with TypeScript and Node. </p>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="mb-3"><span class="fw-bolder">Source Code Management (Git "GitHub/GitLab")
-          </span>
-            <div class="progress my-2 rounded" style="height: 20px">
-              <div class="progress-bar bg-secondary aos-init" role="progressbar" data-aos="zoom-in-right" data-aos-delay="400" data-aos-anchor=".skills-section" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Expert</div>
+          <p> When I learn a new programming language I usually start by messing around in a REPL but eventually, I need
+            more structure.
+          </p>
+          What I like to do is explore concepts and then solidify the ideas with tests. Tests verify the code I write is
+          correct and documents the feature I have learned.
+          < <p> <strong> With a keen interest in cloud engineering and learn new skills in technology, including
+              software engineering,web development, data management and knowledge of cloud computing applications.
+            </strong></p><strong>
+
+            </strong>
+        </div><strong>
+          <strong>
+
+            <div class="shadow-1-strong bg-white my-5 p-5" id="skills">
+              <div class="skills-section">
+                <h2 class="h2 fw-light mb-4">Professional Skills</h2>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="mb-3"><span class="fw-bolder">Cloud (AWSCloud) </span>
+                      <div class="progress my-2 rounded" style="height: 20px">
+                        <div class="progress-bar bg-info aos-init" role="progressbar" data-aos="zoom-in-right"
+                          data-aos-delay="300" data-aos-anchor=".skills-section" style="width: 60%;" aria-valuenow="60"
+                          aria-valuemin="0" aria-valuemax="100">Intermediate</div>
+                      </div>
+                    </div>
+                    <div class="mb-3"><span class="fw-bolder">Libraries, Frameworks, and Other (Bootstrap/React
+                        Actions)</span>
+                      <div class="progress my-2 rounded" style="height: 20px">
+                        <div class="progress-bar bg-info aos-init" role="progressbar" data-aos="zoom-in-right"
+                          data-aos-delay="300" data-aos-anchor=".skills-section" style="width: 60%" aria-valuenow="60"
+                          aria-valuemin="0" aria-valuemax="100">Intermediate</div>
+                      </div>
+                    </div>
+                    <div class="mb-3"><span class="fw-bolder">Configuration Management (Ansible/Puppet)</span>
+                      <div class="progress my-2 rounded" style="height: 20px">
+                        <div class="progress-bar bg-info aos-init" role="progressbar" data-aos="zoom-in-right"
+                          data-aos-delay="300" data-aos-anchor=".skills-section" style="width: 60%" aria-valuenow="60"
+                          aria-valuemin="0" aria-valuemax="100">Intermediate</div>
+                      </div>
+                    </div>
+                    <div class="mb-3"><span class="fw-bolder">Scripting (Python/Bash)</span>
+                      <div class="progress my-2 rounded" style="height: 20px">
+                        <div class="progress-bar bg-info aos-init" role="progressbar" data-aos="zoom-in-right"
+                          data-aos-delay="300" data-aos-anchor=".skills-section" style="width: 60%" aria-valuenow="60"
+                          aria-valuemin="0" aria-valuemax="100">Intermediate</div>
+                      </div>
+
+                      <br>
+                      <p></p>
+                      <p> # Currently
+
+                        I have 3 main technical stacks which I work with. This includes
+
+                        React with TypeScript and Node. </p>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="mb-3"><span class="fw-bolder">Source Code Management (Git "GitHub/GitLab")
+                      </span>
+                      <div class="progress my-2 rounded" style="height: 20px">
+                        <div class="progress-bar bg-secondary aos-init" role="progressbar" data-aos="zoom-in-right"
+                          data-aos-delay="400" data-aos-anchor=".skills-section" style="width: 100%" aria-valuenow="100"
+                          aria-valuemin="0" aria-valuemax="100">Expert</div>
+                      </div>
+                    </div>
+                    <div class="mb-3"><span class="fw-bolder">CI/CD (Jenkins/GitHub Actions)</span>
+                      <div class="progress my-2 rounded" style="height: 20px">
+                        <div class="progress-bar bg-secondary aos-init" role="progressbar" data-aos="zoom-in-right"
+                          data-aos-delay="400" data-aos-anchor=".skills-section" style="width: 60%" aria-valuenow="60"
+                          aria-valuemin="0" aria-valuemax="100">Intermediate</div>
+                      </div>
+                    </div>
+                    <div class="mb-3"><span class="fw-bolder">Containerzation (Docker/K8's)</span>
+                      <div class="progress my-2 rounded" style="height: 20px">
+                        <div class="progress-bar bg-secondary aos-init" role="progressbar" data-aos="zoom-in-right"
+                          data-aos-delay="500" data-aos-anchor=".skills-section" style="width: 25%" aria-valuenow="25"
+                          aria-valuemin="0" aria-valuemax="100">Beginner</div>
+                      </div>
+                    </div>
+                    <div class="mb-3"><span class="fw-bolder">Back End Languages:Javascript | Python</span>
+                      <div class="progress my-2 rounded" style="height: 20px">
+                        <div class="progress-bar bg-secondary aos-init" role="progressbar" data-aos="zoom-in-right"
+                          data-aos-delay="600" data-aos-anchor=".skills-section" style="width: 60%" aria-valuenow="60"
+                          aria-valuemin="0" aria-valuemax="100">Intermediate</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="mb-3"><span class="fw-bolder">CI/CD (Jenkins/GitHub Actions)</span>
-            <div class="progress my-2 rounded" style="height: 20px">
-              <div class="progress-bar bg-secondary aos-init" role="progressbar" data-aos="zoom-in-right" data-aos-delay="400" data-aos-anchor=".skills-section" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">Intermediate</div>
-            </div>
-          </div>
-          <div class="mb-3"><span class="fw-bolder">Containerzation (Docker/K8's)</span>
-            <div class="progress my-2 rounded" style="height: 20px">
-              <div class="progress-bar bg-secondary aos-init" role="progressbar" data-aos="zoom-in-right" data-aos-delay="500" data-aos-anchor=".skills-section" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Beginner</div>
-            </div>
-          </div>
-            <div class="mb-3"><span class="fw-bolder">Back End Languages:Javascript | Python</span>
-            <div class="progress my-2 rounded" style="height: 20px">
-              <div class="progress-bar bg-secondary aos-init" role="progressbar" data-aos="zoom-in-right" data-aos-delay="600" data-aos-anchor=".skills-section" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">Intermediate</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="shadow-1-strong bg-white my-5 p-5" id="experience">
-    <div class="work-experience-section">
-      <h2 class="h2 fw-light mb-4">Administrative and support service Experience</h2>
-      <div class="timeline">
-        <div class="timeline-card timeline-card-info aos-init" data-aos="fade-in" data-aos-delay="0">
-          <div class="timeline-head px-4 pt-3">
-            <div class="h5"> Accounting assistant <span class="text-muted h6">at Ednokratna Upotreba LTD</span></div>
-          </div>
-          <div class="timeline-body px-4 pb-4">
-            <div class="text-muted text-small mb-3">05/2019 – 12/2020</div>
-            
-              • Offshore engineer to maintain client infrastructure and internal monitoring servers.  Using "back-office" computer systems (ERP software). <br>
-              • Create financial documents such as bills, invoices, pay-orders, payables, receivables and purchase orders.<br>
-              • Performing basic office tasks, such as filing, data entry, answering phones, processing the mail, etc.<br>
+            <div class="shadow-1-strong bg-white my-5 p-5" id="experience">
+              <div class="work-experience-section">
+                <h2 class="h2 fw-light mb-4">Administrative and support service Experience</h2>
+                <div class="timeline">
+                  <div class="timeline-card timeline-card-info aos-init" data-aos="fade-in" data-aos-delay="0">
+                    <div class="timeline-head px-4 pt-3">
+                      <div class="h5"> Accounting assistant <span class="text-muted h6">at Ednokratna Upotreba
+                          LTD</span>
+                      </div>
+                    </div>
+                    <div class="timeline-body px-4 pb-4">
+                      <div class="text-muted text-small mb-3">05/2019 – 12/2020</div>
+
+                      • Offshore engineer to maintain client infrastructure and internal monitoring servers. Using
+                      "back-office" computer systems (ERP software). <br>
+                      • Create financial documents such as bills, invoices, pay-orders, payables, receivables and
+                      purchase
+                      orders.<br>
+                      • Performing basic office tasks, such as filing, data entry, answering phones, processing the
+                      mail,
+                      etc.<br>
+                    </div>
+
+                    <div class="timeline-card timeline-card-info aos-init" data-aos="fade-in" data-aos-delay="0">
+                      <div class="timeline-head px-4 pt-3">
+                        <div class="h5"> Accounting assistant <span class="text-muted h6">at Ednokratna Upotreba
+                            LTD</span></div>
+                      </div>
+                      <div class="timeline-body px-4 pb-4">
+                        <div class="text-muted text-small mb-3">05/2019 – 12/2020</div>
+                        <div>
+                          • Offshore engineer to maintain client infrastructure and internal monitoring servers. Using
+                          "back-office" computer systems (ERP software). <br>
+                          • Create financial documents such as bills, invoices, pay-orders, payables, receivables and
+                          purchase orders.<br>
+                          • Performing basic office tasks, such as filing, data entry, answering phones, processing the
+                          mail, etc.<br>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-  <div class="timeline-card timeline-card-info aos-init" data-aos="fade-in" data-aos-delay="0">
-          <div class="timeline-head px-4 pt-3">
-            <div class="h5"> Accounting assistant <span class="text-muted h6">at Ednokratna Upotreba LTD</span></div>
-          </div>
-          <div class="timeline-body px-4 pb-4">
-            <div class="text-muted text-small mb-3">05/2019 – 12/2020</div>
-            <div>
-              • Offshore engineer to maintain client infrastructure and internal monitoring servers.  Using "back-office" computer systems (ERP software). <br>
-              • Create financial documents such as bills, invoices, pay-orders, payables, receivables and purchase orders.<br>
-              • Performing basic office tasks, such as filing, data entry, answering phones, processing the mail, etc.<br>
-              </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+            </div>
+          </strong>
+      </div><strong>
+      </strong>
+    </div><strong>
+    </strong>
+  </div><strong>
 
-          </div>
-        </strong></div><strong>
-      </strong></div><strong>
-    </strong></div><strong>
-  
-  <div class="shadow-1-strong bg-white my-5 p-5" id="education">
-    <div class="education-section">
-      <h2 class="h2 fw-light mb-4">Education</h2>
-      <div class="timeline">
-        <div class="timeline-card timeline-card-success aos-init" data-aos="fade-in" data-aos-delay="200">
-          <div class="timeline-head px-4 pt-3">
-            <div class="h5">Bachelor of INFORMATICS AND COMPUTER SCIENCE <span class="text-muted h6">Varna Free University „Chernorizets Hrabar“from Bharath University</span>          </div>
-          </div>
-          <div class="timeline-body px-4 pb-4">
-            <div class="text-muted text-small mb-3">01/10/2019 - CURRENT</div>
-            <div>
-              <div class="col-md-4 d-flex align-items-center aos-init" data-aos="fade-left" data-aos-delay="100"></div>
-          <div class="m-6 mt-md-2">
-           <p class="text-teal text-small"> </p>
-          </div> <br>
-             5.11 GPA <br>  <a class="btn btn-info btn-lg shadow-sm mt-1 aos-init" href="http://mirelse.github.io/ThesisApplication.html" data-aos="fade-left" data-aos-delay="700">5 .11 GPA</a></div>
+    <div class="shadow-1-strong bg-white my-5 p-5" id="education">
+      <div class="education-section">
+        <h2 class="h2 fw-light mb-4">Education</h2>
+        <div class="timeline">
+          <div class="timeline-card timeline-card-success aos-init" data-aos="fade-in" data-aos-delay="200">
+            <div class="timeline-head px-4 pt-3">
+              <div class="h5">Bachelor of INFORMATICS AND COMPUTER SCIENCE <span class="text-muted h6">Varna Free
+                  University „Chernorizets Hrabar“from Bharath University</span> </div>
+            </div>
+            <div class="timeline-body px-4 pb-4">
+              <div class="text-muted text-small mb-3">01/10/2019 - CURRENT</div>
+              <div>
+                <div class="col-md-4 d-flex align-items-center aos-init" data-aos="fade-left" data-aos-delay="100">
+                </div>
+                <div class="m-6 mt-md-2">
+                  <p class="text-teal text-small"> </p>
+                </div> <br>
+               <br> <a class="btn btn-info btn-lg shadow-sm mt-1 aos-init"
+                  href="http://mirelse.github.io/ThesisApplication.html" data-aos="fade-left" data-aos-delay="700">5 .11
+                  GPA</a>
+              </div>
 
             </div>
           </div>
         </div>
         <div class="timeline-card timeline-card-success aos-init" data-aos="fade-in" data-aos-delay="400">
           <div class="timeline-head px-4 pt-3">
-            <div class="h5">Secondary School for foreign Languages  
-              <span class="text-muted h6">Prof. Dr. Asen Zlatarov"</span>          
+            <div class="h5">Secondary School for foreign Languages
+              <span class="text-muted h6">Prof. Dr. Asen Zlatarov"</span>
             </div>
           </div>
           <div class="timeline-body px-4 pb-4">
             <div class="text-muted text-small mb-3">2012 - 2017</div>
             <div>
               English Language<br>
-              German Language  <br>
+              German Language <br>
             </div>
           </div>
         </div>
       </div>
     </div>
-  
- 
-          <div class="m-6 mt-md-2">
-           <p class="text-teal text-small">Please click here for more projects.</p>
-   
 
-  <div class="shadow-1-strong bg-white my-5 p-5" id="contact">
-    <div class="contant-section">
-      <h2 class="h2 fw-light text mb-4">Contact</h2>
-      <div class="row mb-4">
-        <div class="col-md-5 aos-init" data-aos="fade-left" data-aos-delay="200">
-          <div class="mt-1">
-            <div class="h6"><i class="fas fa-phone pe-2 text-muted" style="width:24px;opacity:0.85;"></i> (+359) 877 359073</div>
-            <div class="h6"><i class="far fa-envelope pe-2 text-muted" style="width:24px;opacity:0.85;"></i> ahwakk@icloud.com </div>
-          </div>
-          <div class="mt-5 d-print-none"><form action="https://formspree.io/f/xdobvvpq" method="POST">
-  <div class="form-outline mb-4">
-    <input type="text" name="Name" id="name" class="form-control" required="">
-    <label class="form-label" for="name" style="margin-left: 0px;">Name</label>
-  <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 41.6px;"></div><div class="form-notch-trailing"></div></div></div>
-  <div class="form-outline mb-4">
-    <input type="email" name="Email" id="email" class="form-control" required="">
-    <label class="form-label" for="email" style="margin-left: 0px;">Email address</label>
-  <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 88.8px;"></div><div class="form-notch-trailing"></div></div></div>
-  <div class="form-outline mb-4">
-    <textarea class="form-control" style="resize: none;" name="Message" id="message" rows="4" required=""></textarea>
-    <label class="form-label" for="message" style="margin-left: 0px;">Message</label>
-  <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 60.8px;"></div><div class="form-notch-trailing"></div></div></div>
-  <button class="btn btn-info btn-block mb-4" type="submit">Send</button>
-</form>
-          </div>
-        </div>
-        <div class="col-md-7 d-print-none aos-init" data-aos="zoom-in" data-aos-delay="100">&lt;<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2932.9468545397563!2d23.32443641572204!3d42.68366807916649!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40aa850900c0c949%3A0x3b0ec42d972b3913!2sul.%20%22Kaliakra%22%202%2C%201421%20g.k.%20Lozenets%2C%20Sofia%2C%20Bulgaria!5e0!3m2!1sen!2sin!4v1663501135602!5m2!1sen!2sin" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" width="600" height="450"></iframe></div>
-      </div>
+
+
+
+
     </div>
-  </div>
-</div>
-    
+
     <footer class="pt-4 pb-4 text-muted text-center d-print-none">
       <div class="container">
         <div class="my-3">
-          <div class="h4">Mirela Yosifova</div>
+          <div class="h4">else://where</div>
           <div class="footer-nav">
-            <nav role="navigation"> 
+            <nav role="navigation">
               <ul class="nav justify-content-center">
-                <li class="nav-item"><a class="nav-link" href="mailto:ahwakk@icloud.com" title="Mail"><i class="fa fa-envelope"></i><span class="menu-title sr-only">Mail</span></a>
+
+
+                <li class="nav-item"><a class="nav-link" href="mailto:ahwakk@icloud.com" title="Mail"><i
+                      class="fa fa-envelope"></i><span class="menu-title sr-only">Mail</span></a>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="https://www.linkedin.com/in/mirelsewhere" title="LinkedIn"><i class="fab fa-linkedin"></i><span class="menu-title sr-only">LinkedIn</span></a>
+
+
+                <li class="nav-item"><a class="nav-link" href="https://www.linkedin.com/in/mirelsewhere"
+                    title="LinkedIn"><i class="fab fa-linkedin"></i><span class="menu-title sr-only">LinkedIn</span></a>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="https://github.com/mirelse" title="Github"><i class="fab fa-github"></i><span class="menu-title sr-only">Github</span></a>
+
+
+                <li class="nav-item"><a class="nav-link" href="https://github.com/mirelse" title="Github"><i
+                      class="fab fa-github"></i><span class="menu-title sr-only">Github</span></a>
+
+
                 </li>
               </ul>
             </nav>
@@ -441,6 +562,9 @@
     <script src="scripts/mdb.min.js?ver=1.2.1"></script>
     <script src="scripts/aos.js?ver=1.2.1"></script>
     <script src="scripts/main.js?ver=1.2.1"></script>
-  
 
-</strong></body></html>
+
+  </strong>
+</body>
+
+</html>
