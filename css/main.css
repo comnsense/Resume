@@ -1,7 +1,7 @@
 /* Timeline custom component */
 .timeline-card {
   position: relative;
-  margin-left: 16px; }
+  margin-left: 0 px; }
 
 .timeline-card:before {
   content: '';
