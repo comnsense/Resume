@@ -112,7 +112,7 @@ footer a:not(.nav-link) {
     opacity: 1 !important;
     transform: translate(0) scale(1) !important; }
   body.bg-light {
-    background-color: #fff !important; }
+    background-color: rgb(30, 101, 64) !important; }
   .container {
     width: auto;
     max-width: 100%;
