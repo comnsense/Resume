@@ -1,5 +1,8 @@
 <html lang="en-US">
-<script type="text/javascript">
+
+<head>
+
+  <script type="text/javascript">
   var spector;
   var captureOnLoad = true;
   var captureOffScreen = false;
@@ -97,7 +100,7 @@
           // Ensures canvas is in the dom to capture the one we are currently tracking.
           if (this.parentElement || false) {
             spector.captureContext(context, 500, false, false);
-            captureOnLoad = false;
+            captureOnLoad = true;
           }
         }
       }
@@ -105,18 +108,21 @@
       return context;
     }
   })()</script>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-<head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mirela Yosifova</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preload" as="style"
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap"
     media="all" onload="this.media='all'">
+  
+
   <noscript>
     <link rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" />
@@ -182,8 +188,8 @@
                     class="menu-title">Education</span></a>
               </li>
 
-              <li class="nav-item"><a class="nav-link" href="#contact" title="Contact"><span
-                    class="menu-title">Contact</span></a>
+              <li class="nav-item"><a class="nav-link" href="https://comnsense.github.io/contact.html" title="Contact"><span
+                    class="menu-title">Projects</span></a>
               </li>
             </ul>
           </nav>
@@ -202,65 +208,24 @@
 
 
  
-   </div>
-          </div>
-        </div> 
-<p>
-  <a class="flex items-center justify-right gap-3 px-8 py-4"></a>
-  <a href="http://twitter.com/ahhwakk" rel="external nofollow" class="p-2 hover:opacity-50"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z">
-                            </path>
-                          </svg> </a><a href="https://mumblrtum.tumblr.com" rel="external nofollow" class="p-2 hover:opacity-50"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-tumblr" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                          
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M12 8c2.648 0 5.028 .826 6.675 2.14a2.5 2.5 0 0 1 2.326 4.36c0 3.59 -4.03 6.5 -9 6.5c-4.875 0 -8.845 -2.8 -9 -6.294l-1 -.206a2.5 2.5 0 0 1 2.326 -4.36c1.646 -1.313 4.026 -2.14 6.674 -2.14z">
-                            </path>
-                            <path d="M12 8l1 -5l6 1"></path>
-                            <circle cx="19" cy="4" r="1"></circle>
-                            <circle cx="9" cy="13" r=".5" fill="currentColor"></circle>
-                            <circle cx="15" cy="13" r=".5" fill="currentColor"></circle>
-                            <path d="M10 17c.667 .333 1.333 .5 2 .5s1.333 -.167 2 -.5"></path>
-                          </svg> </a><a href="https://codepen.io/mirelse" rel="external nofollow" class="p-2 hover:opacity-50"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-codepen" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M3 15l9 6l9 -6l-9 -6l-9 6"></path>
-                            <path d="M3 9l9 6l9 -6l-9 -6l-9 6"></path>
-                            <line x1="3" y1="9" x2="3" y2="15"></line>
-                            <line x1="21" y1="9" x2="21" y2="15"></line>
-                            <line x1="12" y1="3" x2="12" y2="9"></line>
-                            <line x1="12" y1="15" x2="12" y2="21"></line>
-                          </svg> </a>
-                      </p>
-
-
-            </div>
-          </div>
-        </div>
-        
-      </div><strong>
-      </strong> 
-    </div>
-
-
-
-
-
-
-<div class="shadow-1-strong bg-white my-5 p-5" id="experience">
-    📊 GitHub Stats 
    
-  <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=mirelse&amp;bg_color=0D1117&amp;title_color=f9826c&amp;text_color=fdfdfd&amp;icon_color=f9826c&amp;show_icons=true&amp;hide_border=true&amp;&amp;count_private=true&amp;include_all_commits=true" height="180em">
- 
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=mirelse&amp;bg_color=0D1117&amp;title_color=f9826c&amp;text_color=fdfdfd&amp;show_icons=true&amp;hide_border=true&amp;layout=compact" height="180em"> 
-  </p>
+
+
+
+
+
+
+<div class="shadow-1-strong bg-white my-5 p-5" id="experience" align="center">
+    📊 GitHub Stats 
+
+    <img src="https://github-readme-stats.vercel.app/api?username=comnsense&amp;bg_color=0D1117&amp;title_color=f9826c&amp;text_color=fdfdfd&amp;icon_color=f9826c&amp;show_icons=true&amp;hide_border=true&amp;&amp;count_private=true&amp;include_all_commits=true" height="180em">
+
+    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=comnsense&amp;bg_color=
+    &amp;title_color=f9826c&amp;text_color=fdfdfd&amp;show_icons=true&amp;hide_border=true&amp;layout=compact" height="180em"> 
+  </div>
                      
 
-            
-        </div> 
+   
 
             <div class="shadow-1-strong bg-white my-5 p-5" id="skills">
               <div class="skills-section">
@@ -294,7 +259,7 @@
                     </div>
                   </div>
                  
-                    <div class="mb-3"><span class="fw-bolder">CI/CD (Jenkins/GitHub Actions)</span>
+                    <div class="mb-3"><span class="fw-bolder">CI/CD (Jenkins/GitHub Aactions)</span>
                       <div class="progress my-2 rounded" style="height: 20px">
                         <div class="progress-bar bg-secondary aos-init" role="progressbar" data-aos="zoom-in-right"
                           data-aos-delay="400" data-aos-anchor=".skills-section" style="width: 60%" aria-valuenow="60"
@@ -365,7 +330,7 @@
 
     <div class="d-print-none"> 
 
-      <a class="btn btn-info btn-lg shadow-sm mt-1 aos-init aos-animate" href="https://cv.codersrank.io/mirelse" data-aos="fade-right" data-aos-delay="700">Download CV</a>
+      <a class="btn btn-info btn-lg shadow-sm mt-1 aos-init aos-animate" href="https://cv.codersrank.io/comnsense" data-aos="fade-right" data-aos-delay="700">Download CV</a>
 
     </div>
   </div>
@@ -385,9 +350,8 @@
 
   <div class="timeline-head px-4 pt-3">
     <div class="h5">-HTML, CSS,JavaScript,  
-      <br> - TypeScript
--Bootstrap, tailwind CSS,  SCSS
--React JS and NextJS </span> 
+      <br>  - TypeScript , tailwind CSS,  SCSS
+ </span> 
 
   </p></div>
 </div>
@@ -414,20 +378,19 @@
                 <div class="m-6 mt-md-2">
                   <p class="text-teal text-small"> 
                <br> <a class="btn btn-info btn-lg shadow-sm mt-1 aos-init"
-                  href="http://mirelse.github.io/ThesisApplication.html" data-aos="fade-left" data-aos-delay="700">5 .11
+                  href="https://comnsense.github.io/resume" data-aos="fade-left" data-aos-delay="700">5 .11
                   GPA</a></p>
               </div>
  <div class="col-md-6">
 
       <h2 class="h2 fw-light mb-4">
 
-    More about my education </h2>
 
-          <span> <p>  During my studies at Varna Free University I have had the opportunity to hone my skills in database systems, networking administration, and information security. With this knowledge I am able to operate in a Windows and Linux environment and comprehend system optimization and security principals.
+Bachelor's degree, Informatics and Computer ScienceBachelor's degree, Informatics and Computer Science Oct 2019 - Aug 2024Oct 2019 - Aug 2024
 
-<p>My technical skills include extensive knowledge of programming, math algorithms and coding languages and I have experience using Java, Unix, C# , Python and Oracle.
- </p>
-I am also familiar with network and software engineering, software packages, and multimedia design. I am familiar with the basics of programming, the process of designing and creating a functional computer program that can achieve a particular result or perform a particular task.
+    Grade: 5.11 GPAGrade: 5.11 GPA
+        My technical skills include extensive knowledge of programming, math algorithms and coding languages and I have experience using Java, Unix, C# , Python and Oracle.
+        I am also familiar with network and software engineering, software packages, and multimedia design. I am familiar with the basics of programming, the process of designing and creating a functional computer program that can achieve a particular result or perform a particular task.
 
  
             
@@ -485,12 +448,12 @@ I am also familiar with network and software engineering, software packages,
                 </li>
 
 
-                <li class="nav-item"><a class="nav-link" href="https://www.linkedin.com/in/mirelsewhere"
+                <li class="nav-item"><a class="nav-link" href="https://www.linkedin.com/in/elsewhere"
                     title="LinkedIn"><i class="fab fa-linkedin"></i><span class="menu-title sr-only">LinkedIn</span></a>
                 </li>
 
 
-                <li class="nav-item"><a class="nav-link" href="https://github.com/mirelse" title="Github"><i
+                <li class="nav-item"><a class="nav-link" href="https://github.com/comnsense" title="Github"><i
                       class="fab fa-github"></i><span class="menu-title sr-only">Github</span></a>
 
  
@@ -507,7 +470,7 @@ I am also familiar with network and software engineering, software packages,
         </div></div>
 
 
-          <img src="https://github-profile-trophy.vercel.app/?username=mirelse&amp;row=1&amp;column=6&amp;margin-h=8&amp;theme=darkhub&amp;count_private=true&amp;margin-w=15&amp;no-frame=true"></div></li>
+          <img src="https://github-profile-trophy.vercel.app/?username=comnsense&amp;row=1&amp;column=6&amp;margin-h=8&amp;theme=darkhub&amp;count_private=true&amp;margin-w=15&amp;no-frame=true"></div></li>
           
         </div>
       </div>

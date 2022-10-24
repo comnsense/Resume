@@ -1,0 +1,28 @@
+{
+  "name": "resume",
+  "version": "1.0.0",
+  "description": "My resumewebsite with github pages.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/comnsense/Resume.git"
+  },
+  "keywords": [
+    "resume",
+    "comnsense",
+    "mirela",
+    "web",
+    "webdevelopment",
+    "skills",
+    "education"
+  ],
+  "author": "Mirela Yosifova",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/comnsense/Resume/issues"
+  },
+  "homepage": "https://github.com/comnsense/Resume#readme"
+}
